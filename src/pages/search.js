@@ -38,63 +38,71 @@ export default function Search() {
                 padding: '0 50px',
                 minHeight: '90vh'
             }}>
-                <Space style={{
-                    width: '100%',
-                    margin: '10px'
-                }}>
-                    <Input
-                        placeholder="Enter a title"
-                        value={query}
-                        onChange={(e) => setQuery(e.target.value)}
-                    />
-                    <Button type="primary" onClick={handleSearch}>
-                        Search
-                    </Button>
-                </Space>
+
+                <Row>
+                    <Space style={{
+                        width: '100%',
+                        margin: '10px'
+                    }}>
+                        <Input
+                            placeholder="Enter a title"
+                            value={query}
+                            onChange={(e) => setQuery(e.target.value)}
+                        />
+                        <Button type="primary" onClick={handleSearch}>
+                            Search
+                        </Button>
+                    </Space>
+                </Row>
                 {results.length > 0 && (
-                    <Space>
-                        <Row gutter={16}>
-                            {results.map((item, index) => (
-                                <Col key={index} span={6} style={{marginBottom: 10}}>
-                                    <Card title={item.title} bordered={false}
-                                          hoverable
-                                          cover={<img alt={item.title} src={item.image.src}/>}>
-                                        <div className="price" style={{
-                                            marginBottom : '20px'
-                                        }}>
-                                            <Space size={24}>
-                                                <span>{formatCurrencyVND(item.variants[0].price)}</span>
-                                                {item.variants[0].compare_at_price > 0 &&(
-                                                    <del>{formatCurrencyVND(item.variants[0].compare_at_price)}</del>
-                                                )}
-                                            </Space>
-                                        </div>
-                                        <div className="is-quantity-stock">
-                                            <Space size={24}>
-                                                {item.variants[0].inventory_management == null ?
-                                                    <Alert message="Không quản lý kho" type="success"/>
-                                                    :
-                                                    <Alert message="Có quản lý tồn kho" type="warning"/>}
+                    <Row gutter={{
+                        xs: 8,
+                        sm: 16,
+                        md: 24,
+                        lg: 32,
+                    }}>
+                        {results.map((item, index) => (
+                            <Col className="gutter-row" key={index} span={6}
+                                 xs={24} sm={6}
+                                 style={{marginBottom: 10}}>
+                                <Card title={item.title} bordered={false}
+                                      hoverable
+                                      cover={<img alt={item.title} src={item.image.src}/>}>
+                                    <div className="price" style={{
+                                        marginBottom: '20px'
+                                    }}>
+                                        <Space size={24}>
+                                            <span>{formatCurrencyVND(item.variants[0].price)}</span>
+                                            {item.variants[0].compare_at_price > 0 && (
+                                                <del>{formatCurrencyVND(item.variants[0].compare_at_price)}</del>
+                                            )}
+                                        </Space>
+                                    </div>
+                                    <div className="is-quantity-stock">
+                                        <Space size={24}>
+                                            {item.variants[0].inventory_management == null ?
+                                                <Alert message="Không quản lý kho" type="success"/>
+                                                :
+                                                <Alert message="Có quản lý tồn kho" type="warning"/>}
 
-                                                <div className="stock">
-                                                    Số lượng : <span style={{
-                                                    color: `${item.variants[0].inventory_quantity > 0 ? '#28a71a' : '#ff4d4f'}`,
-                                                    fontWeight: 'bold',
-                                                }}
-                                                >{item.variants[0].inventory_quantity}</span>
-                                                </div>
-                                            </Space>
-                                        </div>
+                                            <div className="stock">
+                                                Số lượng : <span style={{
+                                                color: `${item.variants[0].inventory_quantity > 0 ? '#28a71a' : '#ff4d4f'}`,
+                                                fontWeight: 'bold',
+                                            }}
+                                            >{item.variants[0].inventory_quantity}</span>
+                                            </div>
+                                        </Space>
+                                    </div>
 
-                                    </Card>
-
-                                </Col>
-                            ))}
-                            <Col>
+                                </Card>
 
                             </Col>
-                        </Row>
-                    </Space>
+                        ))}
+                        <Col>
+
+                        </Col>
+                    </Row>
                 )}
             </Content>
 
